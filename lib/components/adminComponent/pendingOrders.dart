@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../modal/dataBaseAuth.dart';
-class RentalOrder extends StatefulWidget {
-  const RentalOrder({super.key});
+class PendingOrder extends StatefulWidget {
+  const PendingOrder({super.key});
 
   @override
-  State<RentalOrder> createState() => _RentalOrderState();
+  State<PendingOrder> createState() => _PendingOrderState();
 }
 
-class _RentalOrderState extends State<RentalOrder> {
+class _PendingOrderState extends State<PendingOrder> {
   AuthController authController = AuthController();
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class _RentalOrderState extends State<RentalOrder> {
         Row(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Rental Orders ",style: titleStyle,)
+            Text("Pending Orders ",style: titleStyle,)
           ],
         ),
         StreamBuilder<QuerySnapshot>(stream: authController.getBooks(), builder: (context,snapshot){
@@ -36,17 +36,17 @@ class _RentalOrderState extends State<RentalOrder> {
                   String author  = data['author'];
                   String status  = data['status'];
                   String rating  = data['rating'];
-                  if(status == 'rent') {
+                  if(status == 'pended') {
                     return ListTile(
                       title: Container(
-                            height: 60.0,
-                            width:double.infinity,
-                            decoration: BoxDecoration(
-                              // color: Color(0xffdfdfdf),
-                              border: Border.all(width: 1, color: Colors.grey),
-                              borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                                shape: BoxShape.rectangle
-                            ),
+                        height: 60.0,
+                        width:double.infinity,
+                        decoration: BoxDecoration(
+                          // color: Color(0xffdfdfdf),
+                            border: Border.all(width: 1, color: Colors.grey),
+                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                            shape: BoxShape.rectangle
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -62,8 +62,9 @@ class _RentalOrderState extends State<RentalOrder> {
                               ),),
                             Text(title, style: TextStyle(fontSize: 14.0, fontFamily: 'Ubuntu',color: Color(0xFF514746)),),
                             Text(status,style: TextStyle(fontSize: 14.0, fontFamily: 'Ubuntu',color: Color(0xFF514746)),),
+                            // status == 'pended' ?
                             Material(
-                              color:primeLightBackColor,
+                              color:Color(0xFF5ebf5b),
                               borderRadius: BorderRadius.circular(5.0),
                               elevation: 0.0,
                               child: Container(
@@ -78,27 +79,25 @@ class _RentalOrderState extends State<RentalOrder> {
                                             'title': title,
                                             'author':author,
                                             'rating':rating,
-                                            'status':'available'
+                                            'status':'rent'
                                           },
                                         );
-                                        // await authController.dropRentalBook(docID);
-
-                                        //   drop from retal book documents..
                                       }catch(e){
                                         print(e.toString());
                                       }
                                     },
-                                    child: Text('Return',style: TextStyle(color: Colors.white,fontSize: 12.0,fontFamily: 'Ubuntu'))
+                                    child: Text('Approve',style: TextStyle(color: Colors.white,fontSize: 12.0,fontFamily: 'Ubuntu'))
                                 ),
                               ),
                             )
+                                // : Text(''),
                           ],
                         ),
                       ),
                     );
                   }
                 }
-          );
+            );
           }else {
             return Text("no books");
           }

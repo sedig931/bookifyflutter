@@ -5,6 +5,7 @@ class AuthController {
   final _firestore = FirebaseFirestore.instance;
 
   final CollectionReference books = FirebaseFirestore.instance.collection("books");
+  final CollectionReference pendedRentalBooks = FirebaseFirestore.instance.collection("pendedRentalBooks");
   // login....
   Future<Object>login({
     required String email,
@@ -21,6 +22,7 @@ class AuthController {
         'name':userDoc['name'],
         'email':userDoc['email'],
         'role':userDoc['role'],
+        'id':user.user!.uid
       };
 
     }catch(e){
@@ -41,7 +43,7 @@ class AuthController {
           {
             'name':name,
             'email':email,
-            'role':'admin'
+            'role':'user'
           }
       );
       return null;
@@ -55,19 +57,64 @@ Future<void> addBook ({required String title,required String author ,required St
     return books.add(
         {
           'title': title,
-          'auther':author,
+          'author':author,
           'rating':rating,
           'status':status
         }
     );
 }
+// drop book..
+Future<void> dropBook (docid){
+    return books.doc(docid).delete();
+}
+// update book..
+  Future<String?> updateBook (bookId,bookData) async {
+    try {
+      await books.doc(bookId).update(bookData);
+    }catch(e){
+      return e.toString();
+    }
+  }
 
 // get all books
 Stream<QuerySnapshot> getBooks(){
     return books.snapshots();
 }
-// get rental book
-//   Stream<QuerySnapshot> getRentalBooks(){
-//     return books.snapshots();
-//   }
+
+// user send rent request a book
+  Future<String?>rentBook(bookId,bookData,userID)async {
+    try {
+     await books.doc(bookId).update(bookData);
+     await pendedRentalBooks.add(
+         {
+           'bookID':bookId,
+           'userID':userID,
+         }
+     );
+      return null;
+    }catch(e){
+      return e.toString();
+    }
+  }
+  // drop book from rental collections..
+  Future<String?> dropRentalBook (docid) async {
+    try{
+
+    var snapshots = await pendedRentalBooks.get();
+    for (var doc in snapshots.docs) {
+      // await doc.reference.delete();
+      var doco = doc as Map<String,dynamic>;
+      print(doco.values);
+    // return pendedRentalBooks.doc(docid).delete();
+    }
+
+    }catch(e){
+      return e.toString();
+    }
+
+  }
+// get book to user , that rent by itself
+  Stream<QuerySnapshot> getUserRentalBook(){
+    return pendedRentalBooks.snapshots();
+  }
 }

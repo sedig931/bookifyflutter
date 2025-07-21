@@ -1,7 +1,9 @@
+import 'package:bookify_app/components/userComponent/profile.dart';
 import 'package:bookify_app/modal/sharedData.dart';
 import 'package:bookify_app/screens/adminHome.dart';
 import 'package:bookify_app/screens/loginScreen.dart';
 import 'package:bookify_app/screens/registerScreen.dart';
+import 'package:bookify_app/screens/singleBookScreen.dart';
 import 'package:bookify_app/screens/userHome.dart';
 import 'package:bookify_app/screens/welcomeScreen.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +33,8 @@ class MyApp extends StatelessWidget {
         '/register':(context)=> RegisterScreen(),
         '/userHome':(context)=> UserHomeScreen(),
         '/adminHome':(context)=> AdminHomeScreen(),
+        '/singleBook':(context)=> (BookScreen()),
+        '/userProfile':(context)=> (UserProfile()),
       },
     ));
   }

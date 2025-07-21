@@ -109,8 +109,8 @@ class _AddbookState extends State<Addbook> {
                   child: MaterialButton(
                       padding: EdgeInsets.all(0.0),
                       onPressed: ()async {
-                        print("$bookAuthor $bookTitle $bookRating");
-                        await authController.addBook(title: bookTitle, author: bookAuthor, rating: bookRating, status: 'availible');
+                        // print("$bookAuthor $bookTitle $bookRating");
+                        await authController.addBook(title: bookTitle, author: bookAuthor, rating: bookRating, status: 'available');
                         Navigator.pop(context);
                       },
                       child: Text('Add',style: TextStyle(color: Colors.white,fontSize: 16.0))

@@ -1,5 +1,6 @@
 import 'package:bookify_app/components/adminComponent/addBook.dart';
 import 'package:bookify_app/components/adminComponent/books.dart';
+import 'package:bookify_app/components/adminComponent/pendingOrders.dart';
 import 'package:bookify_app/components/adminComponent/rentalOrder.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -73,6 +74,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                 ),
               ),
               SizedBox(height: 20.0,),
+              PendingOrder(),
               RentalOrder(),
               SizedBox(height: 20.0,),
               Books()

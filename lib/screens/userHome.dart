@@ -14,7 +14,6 @@ class UserHomeScreen extends StatefulWidget {
 
 class _UserHomeScreenState extends State<UserHomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final _firestore = FirebaseFirestore.instance;
   late final userId;
   late String userEmail ;
   var searchWord = '';
@@ -30,83 +29,86 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: ListView(
-          children:[Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Material(
-                        color:Color(0xffdfdfdf),
-                        borderRadius: BorderRadius.circular(50.0),
-                        elevation: 0.0,
-                        child: Container(
-                          height: 35.0,
-                          width: 35.0,
-                          child: MaterialButton(
-                              padding: EdgeInsets.all(0.0),
-                              onPressed: () {
-                                _auth.signOut();
-                                Navigator.pushNamed(context, '/login');
-                              },
-                              child: Icon(Icons.logout,size: 15.0,color: primeLightBackColor,)
-                          ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: ListView(
+        children:[Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Material(
+                      color:Color(0xffdfdfdf),
+                      borderRadius: BorderRadius.circular(50.0),
+                      elevation: 0.0,
+                      child: Container(
+                        height: 35.0,
+                        width: 35.0,
+                        child: MaterialButton(
+                            padding: EdgeInsets.all(0.0),
+                            onPressed: () {
+                              _auth.signOut();
+                              Navigator.pushNamed(context, '/login');
+                            },
+                            child: Icon(Icons.logout,size: 15.0,color: primeLightBackColor,)
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        padding:  EdgeInsets.only(left: 20.5,top: 1,bottom: 1,right: 20.5),
-                        decoration: BoxDecoration(
-                          color: Color(0xffdfdfdf),
-                            borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                            shape: BoxShape.rectangle
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(FontAwesomeIcons.search,color: primeLightBackColor,),
-                            Expanded(
-                              child: TextField(
-                                    style: TextStyle(color: primeLightBackColor),
-                                      onChanged: (value) {
-                                      searchWord = value;
-                                      },
-                                      decoration: InputDecoration(
-                                        contentPadding:
-                                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                                        border: InputBorder.none,
-                                        hintText: "Search",
-                                        hintStyle: TextStyle(color: Colors.grey,fontFamily: 'Ubuntu',fontSize: 16.0),
-                                      )
-                                  ),
-                            ),
-                            Material(
-                              color:primeLightBackColor,
-                              borderRadius: BorderRadius.circular(25.0),
-                              elevation: 0.0,
-                              child: Container(
-                                height: 35.0,
-                                width: 70.0,
-                                child: MaterialButton(
-                                    padding: EdgeInsets.all(0.0),
-                                    onPressed: searchBook,
-                                    child: Text('search',style: TextStyle(color: Colors.white,fontSize: 16.0,fontFamily: 'Ubuntu'))
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding:  EdgeInsets.only(left: 20.5,top: 1,bottom: 1,right: 20.5),
+                      decoration: BoxDecoration(
+                        color: Color(0xffdfdfdf),
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                          shape: BoxShape.rectangle
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(FontAwesomeIcons.search,color: primeLightBackColor,),
+                          Expanded(
+                            child: TextField(
+                                  style: TextStyle(color: primeLightBackColor),
+                                    onChanged: (value) {
+                                    searchWord = value;
+                                    },
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                      border: InputBorder.none,
+                                      hintText: "Search",
+                                      hintStyle: TextStyle(color: Colors.grey,fontFamily: 'Ubuntu',fontSize: 16.0),
+                                    )
                                 ),
+                          ),
+                          Material(
+                            color:primeLightBackColor,
+                            borderRadius: BorderRadius.circular(25.0),
+                            elevation: 0.0,
+                            child: Container(
+                              height: 35.0,
+                              width: 70.0,
+                              child: MaterialButton(
+                                  padding: EdgeInsets.all(0.0),
+                                  onPressed: searchBook,
+                                  child: Text('search',style: TextStyle(color: Colors.white,fontSize: 16.0,fontFamily: 'Ubuntu'))
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: GestureDetector(
+                      onTap: ()=>{
+                      Navigator.pushNamed(context, '/userProfile')
+                      },
                       child: CircleAvatar(
                         radius:22.0,
                         foregroundColor: Colors.white,
@@ -114,15 +116,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         child: Text(Provider.of<sharedData>(context).activeUser['name'][0],style: TextStyle(color: Colors.white,fontSize: 13.0,fontFamily: 'Ubuntu'),),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(height: 25.0,),
-              Books(),
-                //   books shows here...
-              ],
-            ),
-          )],
-        ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 25.0,),
+            Books(),
+              //   books shows here...
+            ],
+          ),
+        )],
       ),
     );
   }
