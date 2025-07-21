@@ -22,6 +22,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text('admin - ${Provider.of<sharedData>(context).activeUser['name']}',style: TextStyle(color:Color(0xFF514746),fontSize: 18.0,fontFamily: 'Ubuntu'),),
         centerTitle: true,
         leadingWidth: 60.0,

@@ -28,6 +28,7 @@ class _BookScreenState extends State<BookScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leadingWidth: 70.0,
         leading:Padding(
           padding: const EdgeInsets.only(left: 25.0),
